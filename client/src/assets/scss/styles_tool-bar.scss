@@ -1,0 +1,4 @@
+.toolBar {
+	@include bar($color-lightGray, 50px);
+    top: 2px;
+}

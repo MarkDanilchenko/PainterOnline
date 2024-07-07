@@ -1,0 +1,4 @@
+.settingsBar {
+	@include bar($color-lightGray, 50px);
+    top: 7px;
+}

@@ -1,11 +1,15 @@
 import React from 'react';
+import { SettingsBar } from './components/SettingsBar.jsx';
+import { ToolBar } from './components/ToolBar.jsx';
+import { Canvas } from './components/Canvas.jsx';
 
 const App = (props) => {
 	return (
 		<div className="app">
 			<div className="container">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius fugit aliquam quam! Eum provident quisquam repellendus possimus libero
-				iusto sequi, consequatur alias reiciendis sint deleniti fugit ea, hic autem quod?
+				<SettingsBar />
+				<ToolBar />
+				<Canvas />
 			</div>
 		</div>
 	);
