@@ -4,10 +4,18 @@
 	height: $height;
 	width: 100%;
 	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5);
 	border: 1px solid $color-black;
     border-radius: 5px;
+	padding-left: 15px;
+    padding-right: 15px;
+}
+
+// FONTS
+// <weight>: Use a value from 100 to 400
+@mixin font-1($weight) {
+	font-family: 'Playwrite CU', cursive;
+	font-optical-sizing: auto;
+	font-weight: $weight;
+	font-style: normal;
 }

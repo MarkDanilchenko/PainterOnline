@@ -7,9 +7,10 @@ const App = (props) => {
 	return (
 		<div className="app">
 			<div className="container">
-				<SettingsBar />
+                <h1>Painter Online</h1>
 				<ToolBar />
-				<Canvas />
+				<SettingsBar />
+				<Canvas width={600} height={600} />
 			</div>
 		</div>
 	);

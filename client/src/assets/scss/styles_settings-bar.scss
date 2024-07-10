@@ -1,4 +1,5 @@
 .settingsBar {
 	@include bar($color-lightGray, 50px);
-    top: 7px;
+    top: 5px;
+    z-index: 1;
 }

@@ -1,5 +1,10 @@
 .app {
 	width: 100%;
 	height: 100vh;
-    background-color: $color-lightGray;
+	background-color: $color-lightGray;
+	.container > h1 {
+		padding-top: 15px;
+		text-align: center;
+		@include font-1(300);
+	}
 }

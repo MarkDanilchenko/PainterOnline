@@ -1,4 +1,55 @@
 .toolBar {
 	@include bar($color-lightGray, 50px);
-    top: 2px;
+	top: 5px;
+	z-index: 10;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	button {
+		width: 30px;
+		height: 30px;
+		border: 1px solid $color-black;
+		border-radius: 5px;
+		margin: 5px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-clip: content-box;
+		padding: 2px;
+		&:hover {
+			cursor: pointer;
+			transform: scale(1.1);
+			box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+		}
+		transition: all 0.2s ease-in-out;
+	}
+}
+
+.toolBar__button_brush {
+	background-image: url('../IMG/logos/Brush_logo.png');
+}
+.toolBar__button_square {
+	background-image: url('../IMG/logos/Square_logo.png');
+}
+.toolBar__button_circle {
+	background-image: url('../IMG/logos/Circle_logo.png');
+}
+.toolBar__button_eraser {
+	background-image: url('../IMG/logos/Eraser_logo.png');
+}
+.toolBar__button_line {
+	background-image: url('../IMG/logos/Line_logo.png');
+}
+.toolBar__button_colorPicker {
+	background-image: url('../IMG/logos/ColorPalette_logo.png');
+}
+.toolBar__button_undo {
+	background-image: url('../IMG/logos/Undo_logo.png');
+}
+.toolBar__button_redo {
+	background-image: url('../IMG/logos/Redo_logo.png');
+}
+.toolBar__button_save {
+	background-image: url('../IMG/logos/Save_logo.png');
 }
