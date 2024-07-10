@@ -1,8 +1,7 @@
 // settings-bar & tool-bar
 @mixin bar($background-color, $height) {
 	background-color: $background-color;
-	height: $height;
-	width: 100%;
+	min-height: $height;
 	position: relative;
 	box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5);
 	border: 1px solid $color-black;
