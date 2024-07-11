@@ -34,10 +34,11 @@
 	background-image: url('../IMG/logos/Brush_logo.png');
 }
 .toolBar__button_rectangle {
-	background-image: url('../IMG/logos/Rectangle_logo.png');
+	background-image: url('../IMG/logos/RectangleFilled_logo.png');
 }
 .toolBar__button_circle {
-	background-image: url('../IMG/logos/Circle_logo.png');
+	background-image: url('../IMG/logos/CircleFilled_logo.png');
+	background-size: 90% !important;
 }
 .toolBar__button_eraser {
 	background-image: url('../IMG/logos/Eraser_logo.png');
