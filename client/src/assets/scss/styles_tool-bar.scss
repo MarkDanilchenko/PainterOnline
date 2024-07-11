@@ -24,13 +24,17 @@
 		}
 		transition: all 0.2s ease-in-out;
 	}
+	.active {
+		transform: scale(1.1);
+		box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+	}
 }
 
 .toolBar__button_brush {
 	background-image: url('../IMG/logos/Brush_logo.png');
 }
-.toolBar__button_square {
-	background-image: url('../IMG/logos/Square_logo.png');
+.toolBar__button_rectangle {
+	background-image: url('../IMG/logos/Rectangle_logo.png');
 }
 .toolBar__button_circle {
 	background-image: url('../IMG/logos/Circle_logo.png');
