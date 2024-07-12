@@ -3,7 +3,7 @@ class Tools {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext('2d');
 		this.clearEventListeners();
-		this.defaultStokeStyle();
+		this.setDefaultStyles();
 	}
 
 	clearEventListeners() {
@@ -12,8 +12,23 @@ class Tools {
 		this.canvas.onmousemove = null;
 	}
 
-	defaultStokeStyle() {
+	setFillColor(color) {
+		this.ctx.fillStyle = color;
+	}
+
+	setStrokeColor(color) {
+		this.ctx.strokeStyle = color;
+	}
+
+	setLineWidth(width) {
+		if (width < 1 || width > 50) return;
+		this.ctx.lineWidth = width;
+	}
+
+	setDefaultStyles() {
 		this.ctx.strokeStyle = 'black';
+		this.ctx.fillStyle = 'black';
+		this.ctx.lineWidth = 1;
 	}
 }
 class Brush extends Tools {
@@ -188,7 +203,6 @@ class Eraser extends Tools {
 
 	draw(x, y) {
 		this.ctx.strokeStyle = 'white';
-		this.ctx.lineWidth = 1;
 		this.ctx.lineTo(x, y);
 		this.ctx.stroke();
 	}

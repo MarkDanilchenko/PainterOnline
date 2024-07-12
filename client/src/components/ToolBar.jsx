@@ -42,7 +42,13 @@ const ToolBar = (props) => {
 						colorPicker.click();
 					}}
 				></button>
-				<input type="color" name="toolBar__button_colorPicker" id="toolBar__button_colorPicker" style={{ display: 'none' }} />
+				<input
+					type="color"
+					className="form-control form-control-color"
+					name="toolBar__button_colorPicker"
+					id="toolBar__button_colorPicker"
+					style={{ display: 'none' }}
+				/>
 			</div>
 			<div>
 				<button className="toolBar__button_undo"></button>

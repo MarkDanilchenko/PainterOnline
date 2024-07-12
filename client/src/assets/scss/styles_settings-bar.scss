@@ -1,5 +1,18 @@
 .settingsBar {
 	@include bar($color-lightGray, 50px);
-    top: 5px;
-    z-index: 1;
+	top: 5px;
+	z-index: 1;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+    label {
+        @include font-1(300);
+        font-size: 0.8rem;
+    }
+}
+
+.settingsBar > div {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
