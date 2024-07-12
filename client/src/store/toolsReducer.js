@@ -21,7 +21,7 @@ const toolsReducer = createSlice({
 	},
 });
 
-const { setTool } = toolsReducer.actions;
+const { setTool, setFillColor, setStrokeColor, setLineWidth } = toolsReducer.actions;
 const reducer = toolsReducer.reducer;
 
-export { setTool, reducer as toolsReducer };
+export { setTool, setFillColor, setStrokeColor, setLineWidth, reducer as toolsReducer };
