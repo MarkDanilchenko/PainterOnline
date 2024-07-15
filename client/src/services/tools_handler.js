@@ -3,7 +3,6 @@ class Tools {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext('2d');
 		this.clearEventListeners();
-		this.setDefaultStyles();
 	}
 
 	clearEventListeners() {
@@ -23,12 +22,6 @@ class Tools {
 	setLineWidth(width) {
 		if (width < 1 || width > 50) return;
 		this.ctx.lineWidth = width;
-	}
-
-	setDefaultStyles() {
-		this.ctx.strokeStyle = 'black';
-		this.ctx.fillStyle = 'black';
-		this.ctx.lineWidth = 1;
 	}
 }
 class Brush extends Tools {
