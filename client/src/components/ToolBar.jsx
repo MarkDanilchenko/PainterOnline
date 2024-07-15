@@ -2,11 +2,18 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTool, setFillColor, setStrokeColor } from '../store/toolsReducer.js';
 import { Brush, Rectangle, Circle, Eraser, Line } from '../services/tools_handler.js';
+import { undo, redo } from '../store/canvasReducer.js';
 
 const ToolBar = (props) => {
 	const dispatch = useDispatch();
 	const canvas = useSelector((state) => {
 		return state.canvasReducer.canvas;
+	});
+	const undoList = useSelector((state) => {
+		return state.canvasReducer.undoList;
+	});
+	const redoList = useSelector((state) => {
+		return state.canvasReducer.redoList;
 	});
 	const selectedTool = useSelector((state) => {
 		return state.toolsReducer.tool;
@@ -19,6 +26,32 @@ const ToolBar = (props) => {
 		} catch (error) {
 			console.warn(`Tool is not set. Please, choose a tool first and then set a color.`);
 			alert(`Tool is not set. Please, choose a tool first and then set a color.`);
+		}
+	};
+
+	const undoAction = () => {
+		if (undoList.length > 0) {
+			const lastCanvasState = undoList[undoList.length - 1];
+			const img = new Image();
+			img.src = lastCanvasState;
+			img.onload = () => {
+				dispatch(undo(img));
+			};
+		} else {
+			console.warn(`Nothing to undo. Please, draw something first.`);
+		}
+	};
+
+	const redoAction = () => {
+		if (redoList.length > 0) {
+			const nextCanvasState = redoList[redoList.length - 1];
+			const img = new Image();
+			img.src = nextCanvasState;
+			img.onload = () => {
+				dispatch(redo(img));
+			};
+		} else {
+			console.warn(`Nothing to redo.`);
 		}
 	};
 
@@ -69,8 +102,8 @@ const ToolBar = (props) => {
 			</div>
 			{/* right buttons */}
 			<div>
-				<button className="toolBar__button_undo"></button>
-				<button className="toolBar__button_redo"></button>
+				<button className="toolBar__button_undo" onClick={() => undoAction()}></button>
+				<button className="toolBar__button_redo" onClick={() => redoAction()}></button>
 				<button className="toolBar__button_save"></button>
 			</div>
 		</div>
