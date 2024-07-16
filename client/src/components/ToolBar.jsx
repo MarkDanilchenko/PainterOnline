@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTool, setFillColor, setStrokeColor } from '../store/toolsReducer.js';
+import { setTool, setStrokeColor } from '../store/toolsReducer.js';
 import { Brush, Rectangle, Circle, Eraser, Line } from '../services/tools_handler.js';
 import { undo, redo } from '../store/canvasReducer.js';
 
@@ -18,16 +18,6 @@ const ToolBar = (props) => {
 	const selectedTool = useSelector((state) => {
 		return state.toolsReducer.tool;
 	});
-
-	const setColor = (event) => {
-		try {
-			dispatch(setFillColor(event.target.value));
-			dispatch(setStrokeColor(event.target.value));
-		} catch (error) {
-			console.warn(`Tool is not set. Please, choose a tool first and then set a color.`);
-			alert(`Tool is not set. Please, choose a tool first and then set a color.`);
-		}
-	};
 
 	const undoAction = () => {
 		if (undoList.length > 0) {
@@ -64,7 +54,7 @@ const ToolBar = (props) => {
 					onClick={() => {
 						dispatch(setTool(new Brush(canvas)));
 						// this dispatch is needed if we want to use brush with selected color after eraser. Otherwise color will be white (like eraser).
-						dispatch(setStrokeColor(document.getElementById('toolBar__button_colorPicker').value));
+						dispatch(setStrokeColor(document.getElementById('settingsBar__input_colorPicker-stroke').value));
 					}}
 				></button>
 				<button
@@ -81,24 +71,12 @@ const ToolBar = (props) => {
 				></button>
 				<button
 					className={`toolBar__button_line ${selectedTool instanceof Line ? 'active' : ''}`}
-					onClick={() => dispatch(setTool(new Line(canvas)))}
-				></button>
-				<button
-					className="toolBar__button_colorPicker"
 					onClick={() => {
-						const colorPicker = document.getElementById('toolBar__button_colorPicker');
-						colorPicker.click();
+						dispatch(setTool(new Line(canvas)));
+						// this dispatch is needed if we want to use line with selected color after eraser. Otherwise color will be white (like eraser).
+						dispatch(setStrokeColor(document.getElementById('settingsBar__input_colorPicker-stroke').value));
 					}}
 				></button>
-				<input
-					type="color"
-					className="form-control form-control-color"
-					name="toolBar__button_colorPicker"
-					id="toolBar__button_colorPicker"
-					style={{ display: 'none' }}
-					onChange={(event) => setColor(event)}
-					defaultValue="#000000"
-				/>
 			</div>
 			{/* right buttons */}
 			<div>

@@ -109,6 +109,7 @@ class Rectangle extends Tools {
 			this.ctx.beginPath();
 			this.ctx.rect(x, y, width, height);
 			this.ctx.fill();
+			this.ctx.stroke();
 		};
 	}
 }
@@ -162,6 +163,7 @@ class Circle extends Tools {
 			this.ctx.beginPath();
 			this.ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
 			this.ctx.fill();
+			this.ctx.stroke();
 		};
 	}
 }

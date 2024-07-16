@@ -14,9 +14,6 @@ const canvasReducer = createSlice({
 		pushToUndoList: (state, action) => {
 			state.undoList.push(action.payload);
 		},
-		pushToRedoList: (state, action) => {
-			state.redoList.push(action.payload);
-		},
 		undo: (state, action) => {
 			const ctx = state.canvas.getContext('2d');
 			state.redoList.push(state.canvas.toDataURL());
@@ -34,7 +31,7 @@ const canvasReducer = createSlice({
 	},
 });
 
-const { setCanvas, pushToUndoList, pushToRedoList, undo, redo } = canvasReducer.actions;
+const { setCanvas, pushToUndoList, undo, redo } = canvasReducer.actions;
 const reducer = canvasReducer.reducer;
 
-export { setCanvas, pushToUndoList, pushToRedoList, undo, redo, reducer as canvasReducer };
+export { setCanvas, pushToUndoList, undo, redo, reducer as canvasReducer };
