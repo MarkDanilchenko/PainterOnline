@@ -25,7 +25,7 @@ const SettingsBar = (props) => {
 				/>
 			</div>
 			<div>
-				<label htmlFor="" className="form-label" id="settingsBar__label_colorPicker-fill">
+				<label className="form-label" id="settingsBar__label_colorPicker-fill">
 					Fill
 				</label>
 				<button
@@ -52,7 +52,7 @@ const SettingsBar = (props) => {
 				/>
 			</div>
 			<div>
-				<label htmlFor="" className="form-label" id="settingsBar__label_colorPicker-stroke">
+				<label className="form-label" id="settingsBar__label_colorPicker-stroke">
 					Stroke
 				</label>
 				<button

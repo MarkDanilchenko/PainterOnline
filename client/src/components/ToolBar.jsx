@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTool, setStrokeColor } from '../store/toolsReducer.js';
 import { Brush, Rectangle, Circle, Eraser, Line } from '../services/tools_handler.js';
-import { undo, redo } from '../store/canvasReducer.js';
+import { undo, redo, clearCanvas } from '../store/canvasReducer.js';
 
 const ToolBar = (props) => {
 	const dispatch = useDispatch();
@@ -45,6 +45,10 @@ const ToolBar = (props) => {
 		}
 	};
 
+	const clear = () => {
+		dispatch(clearCanvas());
+	};
+
 	return (
 		<div className="toolBar">
 			{/* left buttons */}
@@ -83,6 +87,7 @@ const ToolBar = (props) => {
 				<button className="toolBar__button_undo" onClick={() => undoAction()}></button>
 				<button className="toolBar__button_redo" onClick={() => redoAction()}></button>
 				<button className="toolBar__button_save"></button>
+				<button className="toolBar__button_clear" onClick={() => clear()}></button>
 			</div>
 		</div>
 	);

@@ -28,10 +28,15 @@ const canvasReducer = createSlice({
 			ctx.drawImage(action.payload, 0, 0, state.canvas.width, state.canvas.height);
 			state.redoList.pop();
 		},
+		clearCanvas: (state, action) => {
+			const ctx = state.canvas.getContext('2d');
+			state.undoList.push(state.canvas.toDataURL());
+			ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+		},
 	},
 });
 
-const { setCanvas, pushToUndoList, undo, redo } = canvasReducer.actions;
+const { setCanvas, clearCanvas, pushToUndoList, undo, redo } = canvasReducer.actions;
 const reducer = canvasReducer.reducer;
 
-export { setCanvas, pushToUndoList, undo, redo, reducer as canvasReducer };
+export { setCanvas, clearCanvas, pushToUndoList, undo, redo, reducer as canvasReducer };

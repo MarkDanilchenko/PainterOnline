@@ -8,12 +8,13 @@ Technologies used:
 
 - **Frontend**:
   - React;
-  - ReduxToolkit;
+  - Redux-Toolkit;
   - Bootstrap;
-  - SCSS;
+  - HTML/SCSS;
 
 - **Backend**:
   - NodeJS (ExpressJS);
+  - Websockets;
   - Docker + Compose.
 
 ---
