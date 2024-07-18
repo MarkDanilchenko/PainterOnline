@@ -60,8 +60,8 @@ class Brush extends Tools {
 	mouseMoveHandler(event) {
 		if (this.mouseDown) {
 			// So every mouse move we send a message to the server and the server will broadcast it to all connected clients.
-			// Then the clients will draw on the canvas figure they received with the help of the Brush.draw(...) function in draw_handler.js,
-			// which then call the static draw(ctx, x, y).
+			// Then the clients will get figures they received on the canvas with the help of the Brush.draw(...) function in draw_handler.js,
+			// which then call the static draw(ctx, x, y, strokeColor, lineWidth) below.
 			this.socket.send(
 				JSON.stringify({
 					type: 'draw',
@@ -70,15 +70,25 @@ class Brush extends Tools {
 						type: 'brush',
 						x: event.pageX - this.canvas.offsetLeft,
 						y: event.pageY - this.canvas.offsetTop,
+						strokeColor: this.ctx.strokeStyle,
+						lineWidth: this.ctx.lineWidth,
 					},
 				})
 			);
 		}
 	}
 
-	static draw(ctx, x, y) {
+	static draw(ctx, x, y, strokeColor, lineWidth) {
+		// Save each ctx settings before changing it.
+		const currentLineWidth = ctx.lineWidth;
+		const currentStrokeStyle = ctx.strokeStyle;
+		ctx.lineWidth = lineWidth;
 		ctx.lineTo(x, y);
+		ctx.strokeStyle = strokeColor;
 		ctx.stroke();
+		// Set the ctx settings to the previous ones.
+		ctx.strokeStyle = currentStrokeStyle;
+		ctx.lineWidth = currentLineWidth;
 	}
 }
 class Rectangle extends Tools {
@@ -95,25 +105,36 @@ class Rectangle extends Tools {
 
 	mouseUpHandler(event) {
 		this.mouseDown = false;
-		this.socket.send(
-			JSON.stringify({
-				type: 'draw',
-				id: this.sessionId,
-				figureObject: {
-					type: 'rectangle',
-					startX: this.startX,
-					startY: this.startY,
-					width: this.width,
-					height: this.height,
-				},
-			})
-		);
+		if (this.startX && this.startY && this.width && this.height) {
+			this.socket.send(
+				JSON.stringify({
+					type: 'draw',
+					id: this.sessionId,
+					figureObject: {
+						type: 'rectangle',
+						startX: this.startX,
+						startY: this.startY,
+						width: this.width,
+						height: this.height,
+						fillColor: this.ctx.fillStyle,
+						strokeColor: this.ctx.strokeStyle,
+						lineWidth: this.ctx.lineWidth,
+					},
+				})
+			);
+		} else {
+			return;
+		}
+		// Reset the x, y, width and height of the rectangle before drawing a new one.
+		this.startX = 0;
+		this.startY = 0;
+		this.width = 0;
+		this.height = 0;
 	}
 
 	mouseDownHandler(event) {
 		this.mouseDown = true;
 		this.ctx.beginPath();
-		// Get start point from mouse position XY.
 		this.startX = event.pageX - this.canvas.offsetLeft;
 		this.startY = event.pageY - this.canvas.offsetTop;
 		// Save the current images on the canvas.
@@ -148,16 +169,26 @@ class Rectangle extends Tools {
 		};
 	}
 
-	static __draw(ctx, startX, startY, width, height) {
+	static __draw(ctx, startX, startY, width, height, fillColor, strokeColor, lineWidth) {
+		// Save each ctx settings before changing it.
+		const currentFillStyle = ctx.fillStyle;
+		const currentStrokeStyle = ctx.strokeStyle;
+		const currentLineWidth = ctx.lineWidth;
 		ctx.beginPath();
+		ctx.lineWidth = lineWidth;
+		ctx.fillStyle = fillColor;
+		ctx.strokeStyle = strokeColor;
 		ctx.rect(startX, startY, width, height);
 		ctx.fill();
 		ctx.stroke();
+		ctx.fillStyle = currentFillStyle;
+		ctx.strokeStyle = currentStrokeStyle;
+		ctx.lineWidth = currentLineWidth;
 	}
 }
 class Circle extends Tools {
-	constructor(canvas) {
-		super(canvas);
+	constructor(canvas, socket, sessionId) {
+		super(canvas, socket, sessionId);
 		this.listen();
 	}
 
@@ -169,7 +200,6 @@ class Circle extends Tools {
 
 	mouseUpHandler(event) {
 		this.mouseDown = false;
-		this.ctx.closePath();
 	}
 
 	mouseDownHandler(event) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setLineWidth, setFillColor, setStrokeColor } from '../store/toolsReducer.js';
 
 const SettingsBar = (props) => {
@@ -20,7 +20,13 @@ const SettingsBar = (props) => {
 					max="50"
 					defaultValue="1"
 					onChange={(event) => {
-						dispatch(setLineWidth(event.target.value));
+						try {
+							dispatch(setLineWidth(event.target.value));
+						} catch (error) {
+							console.warn(`Tool is not set. Please, choose a tool first and then set a color.`);
+							alert(`Tool is not set. Please, choose a tool first and then set a color.`);
+							event.target.value = 1;
+						}
 					}}
 				/>
 			</div>
