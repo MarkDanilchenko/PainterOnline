@@ -13,6 +13,10 @@ const connectionHandler = (ws, msg) => {
 	// We get the id from the parsed message and assign it to the ws object.
 	// After this, we can use ws.id in the forEach loop below to send messages only to clients with the same session id.
 	ws.id = msg.id;
+	broadcastHandler(ws, msg);
+};
+
+const broadcastHandler = (ws, msg) => {
 	aWss.clients.forEach((client) => {
 		if (client.id === msg.id) {
 			client.send(JSON.stringify(msg));
@@ -26,6 +30,9 @@ server.ws('/', (ws, req) => {
 		switch (msg.type) {
 			case 'connection':
 				connectionHandler(ws, msg);
+				break;
+			case 'draw':
+				broadcastHandler(ws, msg);
 				break;
 			default:
 				break;

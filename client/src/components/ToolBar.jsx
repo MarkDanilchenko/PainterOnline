@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTool, setStrokeColor } from '../store/toolsReducer.js';
-import { Brush, Rectangle, Circle, Eraser, Line } from '../services/tools_handler.js';
 import { undo, redo, clearCanvas } from '../store/canvasReducer.js';
+import { Brush, Rectangle, Circle, Eraser, Line } from '../services/tools_handler.js';
 
 const ToolBar = (props) => {
 	const dispatch = useDispatch();
@@ -17,6 +17,12 @@ const ToolBar = (props) => {
 	});
 	const selectedTool = useSelector((state) => {
 		return state.toolsReducer.tool;
+	});
+	const socket = useSelector((state) => {
+		return state.userReducer.socket;
+	});
+	const sessionId = useSelector((state) => {
+		return state.userReducer.sessionId;
 	});
 
 	const undoAction = () => {
@@ -56,14 +62,14 @@ const ToolBar = (props) => {
 				<button
 					className={`toolBar__button_brush ${selectedTool instanceof Brush ? 'active' : ''}`}
 					onClick={() => {
-						dispatch(setTool(new Brush(canvas)));
+						dispatch(setTool(new Brush(canvas, socket, sessionId)));
 						// this dispatch is needed if we want to use brush with selected color after eraser. Otherwise color will be white (like eraser).
 						dispatch(setStrokeColor(document.getElementById('settingsBar__input_colorPicker-stroke').value));
 					}}
 				></button>
 				<button
 					className={`toolBar__button_rectangle ${selectedTool instanceof Rectangle ? 'active' : ''}`}
-					onClick={() => dispatch(setTool(new Rectangle(canvas)))}
+					onClick={() => dispatch(setTool(new Rectangle(canvas, socket, sessionId)))}
 				></button>
 				<button
 					className={`toolBar__button_circle ${selectedTool instanceof Circle ? 'active' : ''}`}

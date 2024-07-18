@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { SettingsBar } from '../components/SettingsBar.jsx';
 import { ToolBar } from '../components/ToolBar.jsx';
@@ -7,15 +7,27 @@ import { Canvas } from '../components/Canvas.jsx';
 import { Footer } from '../components/Footer.jsx';
 import { ModalGreeting } from '../components/ModalGreeting.jsx';
 import { useResizeCanvas } from '../hooks/useResizeCanvas.js';
+import { setSocket, setSessionId } from '../store/userReducer.js';
+import { drawHandler } from '../services/draw_handler.js';
 
 const Main = (props) => {
+	const dispatch = useDispatch();
 	const params = useParams();
 	const username = useSelector((state) => {
 		return state.userReducer.username;
 	});
+	const sessionId = useSelector((state) => {
+		return state.userReducer.sessionId;
+	});
+	const canvas = useSelector((state) => {
+		return state.canvasReducer.canvas;
+	});
+
 	// Set up connection with the server through websockets.
 	React.useEffect(() => {
 		const socket = new WebSocket(`ws://${process.env.HOST_SERVER || '127.0.0.1'}:${process.env.PORT_SERVER || 5000}/`);
+		dispatch(setSocket(socket));
+		dispatch(setSessionId(params.id));
 		socket.onopen = () => {
 			if (!username) {
 				return;
@@ -24,14 +36,25 @@ const Main = (props) => {
 					JSON.stringify({
 						type: 'connection',
 						username: username,
-						id: params.id,
+						id: sessionId,
 					})
 				);
 			}
 		};
+		// Listen for messages from the server.
 		socket.onmessage = (event) => {
-			const response = JSON.parse(event.data);
-			console.log(`User: ${response.username} was connected to the server. ID: ${response.id}.`);
+			const msg = JSON.parse(event.data);
+			switch (msg.type) {
+				case 'connection':
+					console.log(`User: ${msg.username} was connected to the server. ID: ${msg.id}.`);
+					break;
+				case 'draw':
+					// This draw objects handler function is defined in draw_handler.js
+					drawHandler(msg, canvas);
+					break;
+				default:
+					break;
+			}
 		};
 	}, [username]);
 

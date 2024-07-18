@@ -1,5 +1,7 @@
 class Tools {
-	constructor(canvas) {
+	constructor(canvas, socket, sessionId) {
+		this.socket = socket;
+		this.sessionId = sessionId;
 		this.canvas = canvas;
 		this.ctx = canvas.getContext('2d');
 		this.clearEventListeners();
@@ -25,8 +27,8 @@ class Tools {
 	}
 }
 class Brush extends Tools {
-	constructor(canvas) {
-		super(canvas);
+	constructor(canvas, socket, sessionId) {
+		super(canvas, socket, sessionId);
 		this.listen();
 	}
 
@@ -38,7 +40,15 @@ class Brush extends Tools {
 
 	mouseUpHandler(event) {
 		this.mouseDown = false;
-		this.ctx.closePath();
+		this.socket.send(
+			JSON.stringify({
+				type: 'draw',
+				id: this.sessionId,
+				figureObject: {
+					type: 'brush_finished',
+				},
+			})
+		);
 	}
 
 	mouseDownHandler(event) {
@@ -49,18 +59,31 @@ class Brush extends Tools {
 
 	mouseMoveHandler(event) {
 		if (this.mouseDown) {
-			this.draw(event.pageX - this.canvas.offsetLeft, event.pageY - this.canvas.offsetTop);
+			// So every mouse move we send a message to the server and the server will broadcast it to all connected clients.
+			// Then the clients will draw on the canvas figure they received with the help of the Brush.draw(...) function in draw_handler.js,
+			// which then call the static draw(ctx, x, y).
+			this.socket.send(
+				JSON.stringify({
+					type: 'draw',
+					id: this.sessionId,
+					figureObject: {
+						type: 'brush',
+						x: event.pageX - this.canvas.offsetLeft,
+						y: event.pageY - this.canvas.offsetTop,
+					},
+				})
+			);
 		}
 	}
 
-	draw(x, y) {
-		this.ctx.lineTo(x, y);
-		this.ctx.stroke();
+	static draw(ctx, x, y) {
+		ctx.lineTo(x, y);
+		ctx.stroke();
 	}
 }
 class Rectangle extends Tools {
-	constructor(canvas) {
-		super(canvas);
+	constructor(canvas, socket, sessionId) {
+		super(canvas, socket, sessionId);
 		this.listen();
 	}
 
@@ -72,7 +95,19 @@ class Rectangle extends Tools {
 
 	mouseUpHandler(event) {
 		this.mouseDown = false;
-		this.ctx.closePath();
+		this.socket.send(
+			JSON.stringify({
+				type: 'draw',
+				id: this.sessionId,
+				figureObject: {
+					type: 'rectangle',
+					startX: this.startX,
+					startY: this.startY,
+					width: this.width,
+					height: this.height,
+				},
+			})
+		);
 	}
 
 	mouseDownHandler(event) {
@@ -90,9 +125,9 @@ class Rectangle extends Tools {
 			// Get end point from mouse position XY and calculate width and height of the rectangle.
 			let endX = event.pageX - this.canvas.offsetLeft;
 			let endY = event.pageY - this.canvas.offsetTop;
-			let width = endX - this.startX;
-			let height = endY - this.startY;
-			this.draw(this.startX, this.startY, width, height);
+			this.width = endX - this.startX;
+			this.height = endY - this.startY;
+			this.draw(this.startX, this.startY, this.width, this.height);
 		}
 	}
 
@@ -111,6 +146,13 @@ class Rectangle extends Tools {
 			this.ctx.fill();
 			this.ctx.stroke();
 		};
+	}
+
+	static __draw(ctx, startX, startY, width, height) {
+		ctx.beginPath();
+		ctx.rect(startX, startY, width, height);
+		ctx.fill();
+		ctx.stroke();
 	}
 }
 class Circle extends Tools {
