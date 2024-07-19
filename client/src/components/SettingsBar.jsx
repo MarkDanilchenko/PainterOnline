@@ -24,8 +24,8 @@ const SettingsBar = (props) => {
 							dispatch(setLineWidth(event.target.value));
 						} catch (error) {
 							console.warn(`Tool is not set. Please, choose a tool first and then set a color.`);
-							alert(`Tool is not set. Please, choose a tool first and then set a color.`);
 							event.target.value = 1;
+							props.setShowModalWarning(true);
 						}
 					}}
 				/>
@@ -52,7 +52,8 @@ const SettingsBar = (props) => {
 							dispatch(setFillColor(event.target.value));
 						} catch (error) {
 							console.warn(`Tool is not set. Please, choose a tool first and then set a color.`);
-							alert(`Tool is not set. Please, choose a tool first and then set a color.`);
+							event.target.value = '#000000';
+							props.setShowModalWarning(true);
 						}
 					}}
 				/>
@@ -79,7 +80,8 @@ const SettingsBar = (props) => {
 							dispatch(setStrokeColor(event.target.value));
 						} catch (error) {
 							console.warn(`Tool is not set. Please, choose a tool first and then set a color.`);
-							alert(`Tool is not set. Please, choose a tool first and then set a color.`);
+							event.target.value = '#000000';
+							props.setShowModalWarning(true);
 						}
 					}}
 				/>

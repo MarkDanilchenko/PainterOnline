@@ -1,5 +1,5 @@
 import React from 'react';
-import { setCanvas, pushToUndoList, pushToRedoList } from '../store/canvasReducer.js';
+import { setCanvas, pushToUndoList } from '../store/canvasReducer.js';
 import { useDispatch } from 'react-redux';
 
 const Canvas = (props) => {
@@ -8,7 +8,7 @@ const Canvas = (props) => {
 	React.useEffect(() => {
 		console.log(`Canvas mounted: ${canvasRef.current.width}px x ${canvasRef.current.height}px`);
 		dispatch(setCanvas(canvasRef.current));
-	});
+	}, []);
 
 	// Like take a screenshot of the canvas and save it in the undo list (state).
 	const mouseDownHandler = () => {

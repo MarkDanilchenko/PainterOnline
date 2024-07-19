@@ -55,6 +55,8 @@ const ToolBar = (props) => {
 		dispatch(clearCanvas());
 	};
 
+	const save = () => {};
+
 	return (
 		<div className="toolBar">
 			{/* left buttons */}
@@ -92,7 +94,7 @@ const ToolBar = (props) => {
 			<div>
 				<button className="toolBar__button_undo" onClick={() => undoAction()}></button>
 				<button className="toolBar__button_redo" onClick={() => redoAction()}></button>
-				<button className="toolBar__button_save"></button>
+				<button className="toolBar__button_save" onClick={() => save()}></button>
 				<button className="toolBar__button_clear" onClick={() => clear()}></button>
 			</div>
 		</div>
