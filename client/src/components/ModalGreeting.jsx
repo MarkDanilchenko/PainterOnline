@@ -11,7 +11,7 @@ const ModalGreeting = (props) => {
 	const connectHandler = () => {
 		if (inputUsername) {
 			dispatch(setUsername(inputUsername));
-			props.setShowModal(false);
+			props.setShowModalGreeting(false);
 		} else {
 			return;
 		}
@@ -19,9 +19,9 @@ const ModalGreeting = (props) => {
 
 	return (
 		<Modal
-			show={props.showModal}
+			show={props.showModalGreeting}
 			onHide={() => {
-				props.setShowModal(false);
+				props.setShowModalGreeting(false);
 			}}
 			backdrop="static"
 			keyboard={false}

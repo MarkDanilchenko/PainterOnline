@@ -6,9 +6,9 @@ import { ToolBar } from '../components/ToolBar.jsx';
 import { Canvas } from '../components/Canvas.jsx';
 import { Footer } from '../components/Footer.jsx';
 import { ModalGreeting } from '../components/ModalGreeting.jsx';
-import { ModalWarning } from '../components/ModalWarning.jsx';
 import { useResizeCanvas } from '../hooks/useResizeCanvas.js';
 import { setSocket, setSessionId } from '../store/userReducer.js';
+import { clearCanvas } from '../store/canvasReducer.js';
 import { drawHandler } from '../services/draw_handler.js';
 
 const Main = (props) => {
@@ -23,9 +23,7 @@ const Main = (props) => {
 	const canvas = useSelector((state) => {
 		return state.canvasReducer.canvas;
 	});
-	const [showModalWarning, setShowModalWarning] = React.useState(false);
 	const [showModalGreeting, setShowModalGreeting] = React.useState(true);
-
 	// Set up connection with the server through websockets.
 	React.useEffect(() => {
 		const socket = new WebSocket(`ws://${process.env.HOST_SERVER || '127.0.0.1'}:${process.env.PORT_SERVER || 5000}/`);
@@ -53,8 +51,11 @@ const Main = (props) => {
 					console.log(`User: ${msg.username} was connected to the server. ID: ${msg.id}.`);
 					break;
 				case 'draw':
-					// This draw objects handler function is defined in draw_handler.js
+					// This is a draw handler function.
 					drawHandler(msg, canvas);
+					break;
+				case 'clear':
+					dispatch(clearCanvas());
 					break;
 				default:
 					break;
@@ -67,11 +68,10 @@ const Main = (props) => {
 			<div className="row">
 				<h1>Painter Online</h1>
 				<ToolBar />
-				<SettingsBar setShowModalWarning={setShowModalWarning} />
+				<SettingsBar />
 			</div>
 			<div className="row">
-				<ModalGreeting showModal={showModalGreeting} setShowModal={setShowModalGreeting} />
-				<ModalWarning showModal={showModalWarning} setShowModal={setShowModalWarning} />
+				<ModalGreeting showModalGreeting={showModalGreeting} setShowModalGreeting={setShowModalGreeting} />
 				{/* Custom hook to resize the canvas based on the window size. */}
 				<Canvas width={useResizeCanvas().canvasWidth} height={useResizeCanvas().canvasHeight} />
 			</div>

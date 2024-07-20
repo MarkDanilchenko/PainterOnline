@@ -34,6 +34,9 @@ server.ws('/', (ws, req) => {
 			case 'draw':
 				broadcastHandler(ws, msg);
 				break;
+			case 'clear':
+				broadcastHandler(ws, msg);
+				break;
 			default:
 				break;
 		}

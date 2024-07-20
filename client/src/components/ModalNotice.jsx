@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-const ModalWarning = (props) => {
+const ModalNotice = (props) => {
 	return (
 		<Modal
 			show={props.showModal}
@@ -14,34 +14,35 @@ const ModalWarning = (props) => {
 			centered
 		>
 			<Modal.Header>
-				<Modal.Title id="modalWarning__header__title">
-					<p>Warning!</p>
+				<Modal.Title id="modalNotice__header__title">
+					<p>Notice!</p>
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<p style={{ textAlign: 'center' }}>
-					Tool is not set.
-					<br /> <br /> Please, choose a tool first to set a color or a line width.
-				</p>
+				<p style={{ textAlign: 'center', marginBottom: '30px', marginTop: '30px' }}>{props.modalContent}</p>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button
 					variant="primary"
 					onClick={() => {
 						props.setShowModal(false);
+						props.setModalResult(true);
 					}}
-					onKeyUp={(e) => {
-						if (e.key === 'Enter') {
-							props.setShowModal(false);
-						}
-					}}
-					disabled={false}
 				>
 					OK
+				</Button>
+				<Button
+					variant="secondary"
+					onClick={() => {
+						props.setShowModal(false);
+						props.setModalResult(false);
+					}}
+				>
+					Cancel
 				</Button>
 			</Modal.Footer>
 		</Modal>
 	);
 };
 
-export { ModalWarning };
+export { ModalNotice };
