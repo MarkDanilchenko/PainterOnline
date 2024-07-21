@@ -1,7 +1,7 @@
 // --------------------------------------SERVER_CONFIG
-const express = require('express');
+const express = require("express");
 const server = express();
-const expressWs = require('express-ws')(server);
+const expressWs = require("express-ws")(server);
 // For broadcast messages to all connected clients.
 const aWss = expressWs.getWss();
 
@@ -24,17 +24,17 @@ const broadcastHandler = (ws, msg) => {
 	});
 };
 
-server.ws('/', (ws, req) => {
-	ws.on('message', (message) => {
+server.ws("/", (ws, req) => {
+	ws.on("message", (message) => {
 		const msg = JSON.parse(message);
 		switch (msg.type) {
-			case 'connection':
+			case "connection":
 				connectionHandler(ws, msg);
 				break;
-			case 'draw':
+			case "draw":
 				broadcastHandler(ws, msg);
 				break;
-			case 'clear':
+			case "clear":
 				broadcastHandler(ws, msg);
 				break;
 			default:

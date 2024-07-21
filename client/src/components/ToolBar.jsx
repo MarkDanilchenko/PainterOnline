@@ -1,9 +1,9 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setTool, setStrokeColor } from '../store/toolsReducer.js';
-import { undo, redo, clearCanvas } from '../store/canvasReducer.js';
-import { Brush, Rectangle, Circle, Eraser, Line } from '../services/tools_handler.js';
-import { ModalNotice } from './ModalNotice.jsx';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setTool, setStrokeColor } from "../store/toolsReducer.js";
+import { undo, redo, clearCanvas } from "../store/canvasReducer.js";
+import { Brush, Rectangle, Circle, Eraser, Line } from "../services/tools_handler.js";
+import { ModalNotice } from "./ModalNotice.jsx";
 
 const ToolBar = (props) => {
 	const dispatch = useDispatch();
@@ -26,13 +26,13 @@ const ToolBar = (props) => {
 		return state.userReducer.sessionId;
 	});
 	const [showModal, setShowModal] = React.useState(false);
-	const [modalContent, setModalContent] = React.useState('');
+	const [modalContent, setModalContent] = React.useState("");
 	const [modalResult, setModalResult] = React.useState(false);
 	React.useEffect(() => {
 		if (modalResult) {
 			socket.send(
 				JSON.stringify({
-					type: 'clear',
+					type: "clear",
 					id: sessionId,
 				})
 			);
@@ -68,12 +68,20 @@ const ToolBar = (props) => {
 
 	const clear = () => {
 		setModalContent(
-			'Are you sure you want to clear the canvas? This action cannot be undone and will completely clear the canvas for all currently connected users!'
+			"Are you sure you want to clear the canvas? This action cannot be undone and will completely clear the canvas for all currently connected users!"
 		);
 		setShowModal(true);
 	};
 
-	const save = () => {};
+	const save = () => {
+		const data = canvas.toDataURL();
+		const a = document.createElement("a");
+		a.style = "display: none";
+		a.href = data;
+		a.download = `canvas-${sessionId}.png`;
+		a.click();
+		a.remove();
+	};
 
 	return (
 		<>
@@ -82,31 +90,31 @@ const ToolBar = (props) => {
 				{/* left buttons */}
 				<div>
 					<button
-						className={`toolBar__button_brush ${selectedTool instanceof Brush ? 'active' : ''}`}
+						className={`toolBar__button_brush ${selectedTool instanceof Brush ? "active" : ""}`}
 						onClick={() => {
 							dispatch(setTool(new Brush(canvas, socket, sessionId)));
 							// this dispatch is needed if we want to use brush with selected color after eraser. Otherwise color will be white (like eraser).
-							dispatch(setStrokeColor(document.getElementById('settingsBar__input_colorPicker-stroke').value));
+							dispatch(setStrokeColor(document.getElementById("settingsBar__input_colorPicker-stroke").value));
 						}}
 					></button>
 					<button
-						className={`toolBar__button_rectangle ${selectedTool instanceof Rectangle ? 'active' : ''}`}
+						className={`toolBar__button_rectangle ${selectedTool instanceof Rectangle ? "active" : ""}`}
 						onClick={() => dispatch(setTool(new Rectangle(canvas, socket, sessionId)))}
 					></button>
 					<button
-						className={`toolBar__button_circle ${selectedTool instanceof Circle ? 'active' : ''}`}
+						className={`toolBar__button_circle ${selectedTool instanceof Circle ? "active" : ""}`}
 						onClick={() => dispatch(setTool(new Circle(canvas, socket, sessionId)))}
 					></button>
 					<button
-						className={`toolBar__button_eraser ${selectedTool instanceof Eraser ? 'active' : ''}`}
+						className={`toolBar__button_eraser ${selectedTool instanceof Eraser ? "active" : ""}`}
 						onClick={() => dispatch(setTool(new Eraser(canvas, socket, sessionId)))}
 					></button>
 					<button
-						className={`toolBar__button_line ${selectedTool instanceof Line ? 'active' : ''}`}
+						className={`toolBar__button_line ${selectedTool instanceof Line ? "active" : ""}`}
 						onClick={() => {
 							dispatch(setTool(new Line(canvas, socket, sessionId)));
 							// this dispatch is needed if we want to use line with selected color after eraser. Otherwise color will be white (like eraser).
-							dispatch(setStrokeColor(document.getElementById('settingsBar__input_colorPicker-stroke').value));
+							dispatch(setStrokeColor(document.getElementById("settingsBar__input_colorPicker-stroke").value));
 						}}
 					></button>
 				</div>
