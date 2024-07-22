@@ -11,6 +11,7 @@ server.use(cors(corsOptions));
 const expressWs = require("express-ws")(server);
 const aWss = expressWs.getWss();
 const { router } = require("./router/router.js");
+const { undoListHandler } = require("./services/undoListHandler.js");
 
 // --------------------------------------COMMON_MIDDLEWARE
 server.use(express.json());
@@ -41,13 +42,21 @@ server.ws("/", (ws, req) => {
 		const msg = JSON.parse(message);
 		switch (msg.type) {
 			case "connection":
-				connectionHandler(ws, msg);
+				connectionHandler(ws, { ...msg, undoList: undoListHandler.undoList[msg.id] ?? [] });
 				break;
 			case "draw":
 				broadcastHandler(ws, msg);
 				break;
 			case "clear":
 				broadcastHandler(ws, msg);
+				break;
+			case "undoListSync":
+				if (msg.id in undoListHandler.undoList) {
+					undoListHandler.pushToUndoList(msg.id, msg.lastAction);
+				} else {
+					undoListHandler.setUndoList(msg.id, msg.lastAction);
+				}
+				broadcastHandler(ws, { ...msg, undoList: undoListHandler.undoList[msg.id] });
 				break;
 			case "undo":
 				broadcastHandler(ws, msg);

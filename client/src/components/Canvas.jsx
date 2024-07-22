@@ -8,6 +8,12 @@ const Canvas = (props) => {
 	const dispatch = useDispatch();
 	const canvasRef = React.useRef();
 	const params = useParams();
+	const socket = useSelector((state) => {
+		return state.userReducer.socket;
+	});
+	const undoList = useSelector((state) => {
+		return state.canvasReducer.undoList;
+	});
 	React.useEffect(() => {
 		dispatch(setCanvas(canvasRef.current));
 		console.log(`Canvas mounted: ${canvasRef.current.width}px x ${canvasRef.current.height}px`);
@@ -58,6 +64,14 @@ const Canvas = (props) => {
 			.catch((e) => {
 				console.log(e.message);
 			});
+		// Sync Undo List between all users who are connected to the same session.
+		socket.send(
+			JSON.stringify({
+				type: "undoListSync",
+				id: params.id,
+				lastAction: undoList[undoList.length - 1],
+			})
+		);
 	};
 
 	return (

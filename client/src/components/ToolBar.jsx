@@ -45,7 +45,6 @@ const ToolBar = (props) => {
 				type: "undo",
 				id: sessionId,
 				undoList: undoList,
-				redoList: redoList,
 			})
 		);
 	};
@@ -55,7 +54,6 @@ const ToolBar = (props) => {
 			JSON.stringify({
 				type: "redo",
 				id: sessionId,
-				undoList: undoList,
 				redoList: redoList,
 			})
 		);

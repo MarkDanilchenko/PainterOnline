@@ -8,8 +8,9 @@ import { Footer } from "../components/Footer.jsx";
 import { ModalGreeting } from "../components/ModalGreeting.jsx";
 import { useResizeCanvas } from "../hooks/useResizeCanvas.js";
 import { setSocket, setSessionId } from "../store/userReducer.js";
-import { clearCanvas, undo, redo } from "../store/canvasReducer.js";
+import { clearCanvas, undo, redo, syncUndoList } from "../store/canvasReducer.js";
 import { drawHandler } from "../services/draw_handler.js";
+import axios from "axios";
 
 const Main = (props) => {
 	const dispatch = useDispatch();
@@ -48,12 +49,39 @@ const Main = (props) => {
 			switch (msg.type) {
 				case "connection":
 					console.log(`User: ${msg.username} was connected to the server. ID: ${msg.id}.`);
+					msg.undoList && dispatch(syncUndoList(msg.undoList));
 					break;
 				case "draw":
 					drawHandler(msg, canvas);
 					break;
 				case "clear":
+					socket.send(
+						JSON.stringify({
+							type: "undoListSync",
+							id: sessionId,
+							lastAction: canvas.toDataURL(),
+						})
+					);
 					dispatch(clearCanvas());
+					// Clear canvas Image on the server in mediafiles.
+					axios
+						.post(
+							`http://${process.env.HOST_SERVER || "127.0.0.1"}:${process.env.PORT_SERVER || 5000}/api/v1/image?sessionId=${params.id}`,
+							{
+								canvasImgData: canvas.toDataURL(),
+							},
+							{
+								headers: {
+									"Content-Type": "application/json",
+								},
+							}
+						)
+						.catch((e) => {
+							console.log(e.message);
+						});
+					break;
+				case "undoListSync":
+					dispatch(syncUndoList(msg.undoList));
 					break;
 				case "undo":
 					if (msg.undoList.length > 0) {
