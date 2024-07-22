@@ -49,6 +49,12 @@ server.ws("/", (ws, req) => {
 			case "clear":
 				broadcastHandler(ws, msg);
 				break;
+			case "undo":
+				broadcastHandler(ws, msg);
+				break;
+			case "redo":
+				broadcastHandler(ws, msg);
+				break;
 			default:
 				break;
 		}

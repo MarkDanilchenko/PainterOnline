@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setTool, setStrokeColor } from "../store/toolsReducer.js";
-import { undo, redo, clearCanvas } from "../store/canvasReducer.js";
 import { Brush, Rectangle, Circle, Eraser, Line } from "../services/tools_handler.js";
 import { ModalNotice } from "./ModalNotice.jsx";
 
@@ -41,29 +40,25 @@ const ToolBar = (props) => {
 	}, [modalResult]);
 
 	const undoAction = () => {
-		if (undoList.length > 0) {
-			const lastCanvasState = undoList[undoList.length - 1];
-			const img = new Image();
-			img.src = lastCanvasState;
-			img.onload = () => {
-				dispatch(undo(img));
-			};
-		} else {
-			console.warn(`Nothing to undo. Please, draw something first.`);
-		}
+		socket.send(
+			JSON.stringify({
+				type: "undo",
+				id: sessionId,
+				undoList: undoList,
+				redoList: redoList,
+			})
+		);
 	};
 
 	const redoAction = () => {
-		if (redoList.length > 0) {
-			const nextCanvasState = redoList[redoList.length - 1];
-			const img = new Image();
-			img.src = nextCanvasState;
-			img.onload = () => {
-				dispatch(redo(img));
-			};
-		} else {
-			console.warn(`Nothing to redo.`);
-		}
+		socket.send(
+			JSON.stringify({
+				type: "redo",
+				id: sessionId,
+				undoList: undoList,
+				redoList: redoList,
+			})
+		);
 	};
 
 	const clear = () => {
