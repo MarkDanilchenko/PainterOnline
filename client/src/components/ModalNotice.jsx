@@ -1,5 +1,5 @@
-import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React from "react";
+import { Modal, Button } from "react-bootstrap";
 
 const ModalNotice = (props) => {
 	return (
@@ -19,14 +19,14 @@ const ModalNotice = (props) => {
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<p style={{ textAlign: 'center', marginBottom: '30px', marginTop: '30px' }}>{props.modalContent}</p>
+				<p style={{ textAlign: "center", marginBottom: "30px", marginTop: "30px" }}>{props.modalContent}</p>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button
 					variant="primary"
 					onClick={() => {
 						props.setShowModal(false);
-						props.setModalResult(true);
+						props.setModalResult && props.setModalResult(true);
 					}}
 				>
 					OK
@@ -35,7 +35,7 @@ const ModalNotice = (props) => {
 					variant="secondary"
 					onClick={() => {
 						props.setShowModal(false);
-						props.setModalResult(false);
+						props.setModalResult && props.setModalResult(false);
 					}}
 				>
 					Cancel

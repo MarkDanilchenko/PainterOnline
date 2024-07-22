@@ -3,8 +3,8 @@ class Tools {
 		this.socket = socket;
 		this.sessionId = sessionId;
 		this.canvas = canvas;
-		this.ctx = canvas.getContext('2d');
-		this.ctx.lineCap = 'round';
+		this.ctx = canvas.getContext("2d");
+		this.ctx.lineCap = "round";
 		this.clearEventListeners();
 	}
 
@@ -43,10 +43,10 @@ class Brush extends Tools {
 		this.mouseDown = false;
 		this.socket.send(
 			JSON.stringify({
-				type: 'draw',
+				type: "draw",
 				id: this.sessionId,
 				figureObject: {
-					type: 'brush_finished',
+					type: "brush_finished",
 				},
 			})
 		);
@@ -65,10 +65,10 @@ class Brush extends Tools {
 			// which then call the static draw(ctx, x, y, strokeColor, lineWidth) defined below.
 			this.socket.send(
 				JSON.stringify({
-					type: 'draw',
+					type: "draw",
 					id: this.sessionId,
 					figureObject: {
-						type: 'brush',
+						type: "brush",
 						x: event.pageX - this.canvas.offsetLeft,
 						y: event.pageY - this.canvas.offsetTop,
 						strokeColor: this.ctx.strokeStyle,
@@ -109,10 +109,10 @@ class Rectangle extends Tools {
 		if (this.startX && this.startY && this.width && this.height) {
 			this.socket.send(
 				JSON.stringify({
-					type: 'draw',
+					type: "draw",
 					id: this.sessionId,
 					figureObject: {
-						type: 'rectangle',
+						type: "rectangle",
 						startX: this.startX,
 						startY: this.startY,
 						width: this.width,
@@ -125,10 +125,10 @@ class Rectangle extends Tools {
 			);
 			this.socket.send(
 				JSON.stringify({
-					type: 'draw',
+					type: "draw",
 					id: this.sessionId,
 					figureObject: {
-						type: 'rectangle_finished',
+						type: "rectangle_finished",
 					},
 				})
 			);
@@ -214,10 +214,10 @@ class Circle extends Tools {
 		if (this.startX && this.startY && this.radius) {
 			this.socket.send(
 				JSON.stringify({
-					type: 'draw',
+					type: "draw",
 					id: this.sessionId,
 					figureObject: {
-						type: 'circle',
+						type: "circle",
 						startX: this.startX,
 						startY: this.startY,
 						radius: this.radius,
@@ -229,10 +229,10 @@ class Circle extends Tools {
 			);
 			this.socket.send(
 				JSON.stringify({
-					type: 'draw',
+					type: "draw",
 					id: this.sessionId,
 					figureObject: {
-						type: 'circle_finished',
+						type: "circle_finished",
 					},
 				})
 			);
@@ -314,10 +314,10 @@ class Eraser extends Tools {
 		this.mouseDown = false;
 		this.socket.send(
 			JSON.stringify({
-				type: 'draw',
+				type: "draw",
 				id: this.sessionId,
 				figureObject: {
-					type: 'eraser_finished',
+					type: "eraser_finished",
 				},
 			})
 		);
@@ -337,10 +337,10 @@ class Eraser extends Tools {
 			// which then call the static __draw(ctx, x, y, lineWidth) defined below.
 			this.socket.send(
 				JSON.stringify({
-					type: 'draw',
+					type: "draw",
 					id: this.sessionId,
 					figureObject: {
-						type: 'eraser',
+						type: "eraser",
 						x: event.pageX - this.canvas.offsetLeft,
 						y: event.pageY - this.canvas.offsetTop,
 						lineWidth: this.ctx.lineWidth,
@@ -355,7 +355,7 @@ class Eraser extends Tools {
 		const currentLineWidth = ctx.lineWidth;
 		const currentStrokeStyle = ctx.strokeStyle;
 		ctx.lineWidth = lineWidth;
-		ctx.strokeStyle = 'white';
+		ctx.strokeStyle = "white";
 		ctx.lineTo(x, y);
 		ctx.stroke();
 		// Set the ctx settings to the previous ones.
@@ -380,10 +380,10 @@ class Line extends Tools {
 		if (this.startX && this.startY && this.endX && this.endY) {
 			this.socket.send(
 				JSON.stringify({
-					type: 'draw',
+					type: "draw",
 					id: this.sessionId,
 					figureObject: {
-						type: 'line',
+						type: "line",
 						startX: this.startX,
 						startY: this.startY,
 						endX: this.endX,
@@ -395,10 +395,10 @@ class Line extends Tools {
 			);
 			this.socket.send(
 				JSON.stringify({
-					type: 'draw',
+					type: "draw",
 					id: this.sessionId,
 					figureObject: {
-						type: 'line_finished',
+						type: "line_finished",
 					},
 				})
 			);

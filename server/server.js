@@ -1,10 +1,22 @@
 // --------------------------------------SERVER_CONFIG
 const express = require("express");
 const server = express();
+const cors = require("cors");
+const corsOptions = {
+	origin: "*",
+	methods: ["GET", "POST", "PUT", "DELETE"],
+};
+server.use(cors(corsOptions));
+// aWss is needed for broadcast messages to all connected clients.
 const expressWs = require("express-ws")(server);
-// For broadcast messages to all connected clients.
 const aWss = expressWs.getWss();
+const { router } = require("./router/router.js");
 
+// --------------------------------------COMMON_MIDDLEWARE
+server.use(express.json());
+server.use(express.urlencoded({ extended: false }));
+
+// --------------------------------------WEBSOCKET
 const connectionHandler = (ws, msg) => {
 	console.log(`User: ${msg.username} was connected to the server. ID: ${msg.id}.`);
 	// Broadcast message to all connected clients with the same session ID (which is the :id param in the URL on client).
@@ -41,6 +53,20 @@ server.ws("/", (ws, req) => {
 				break;
 		}
 	});
+});
+
+// --------------------------------------ROUTES
+server.use("/api/v1", router);
+
+server.all("/", async (req, res) => {
+	res.status(302);
+	res.redirect("/api/v1");
+});
+
+server.all("*", async (req, res) => {
+	res.status(404);
+	res.json({ message: "Resource Not found. Please, check the URL and try again." });
+	res.end();
 });
 
 // --------------------------------------EXPORT
