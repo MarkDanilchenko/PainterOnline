@@ -1,14 +1,10 @@
 .settingsBar {
-	@include bar($color-lightGray, 50px);
-	top: 5px;
-	z-index: 1;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-start;
+	@include bar($color-white, 50px, center, flex-start);
+	flex-wrap: wrap;
 	label {
-		@include font-1(400);
-		font-size: 0.7rem;
+		font-size: 10px;
+		font-weight: 700;
+		font-family: "Courier New", Courier, monospace;
 	}
 	button {
 		width: 30px;
@@ -20,6 +16,7 @@
 		background-repeat: no-repeat;
 		background-size: contain;
 		background-clip: content-box;
+		background-color: $color-white;
 		padding: 2px;
 		&:hover {
 			cursor: pointer;
@@ -46,25 +43,14 @@
 	justify-content: center;
 	label {
 		margin-bottom: 0px;
-		min-width: 50px;
+		min-width: 70px;
 		text-align: center;
 	}
 }
 
 #settingsBar__label_colorPicker-fill {
-	background: linear-gradient(
-			45deg,
-			transparent 5%,
-			rgba(255, 0, 0, 0.7),
-			rgba(255, 165, 0, 0.7),
-			rgba(255, 255, 0, 0.7),
-			rgba(0, 207, 0, 0.7),
-			rgba(0, 0, 255, 0.7),
-			rgba(75, 0, 130, 0.7),
-			transparent 95%
-		)
-		border-box;
-	border-radius: 5px;
+	background: linear-gradient(45deg, rgba(255, 0, 0, 0.7), rgba(255, 255, 0, 0.7), rgba(0, 207, 0, 0.7), rgba(0, 0, 255, 0.7));
+	border-radius: 10px 0px 10px 0px;
 	padding: 5px;
 	font-weight: bolder;
 	text-shadow: $color-white 0 0 5px;
@@ -76,14 +62,14 @@
 }
 
 #settingsBar__label_colorPicker-stroke::after {
-	content: '';
+	content: "";
 	position: absolute;
 	inset: 0px;
 	border: 3px solid transparent;
 	border-left: none;
 	border-top: none;
 	border-radius: 0px 0px 5px 0px;
-	background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo) border-box;
+	background: linear-gradient(45deg, rgba(255, 0, 0, 0.7), rgba(255, 255, 0, 0.7), rgba(0, 207, 0, 0.7), rgba(0, 0, 255, 0.7)) border-box;
 	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
 	-webkit-mask-composite: xor;
 	mask-composite: exclude;
@@ -91,5 +77,5 @@
 
 .settingsBar__button_colorPicker-fill,
 .settingsBar__button_colorPicker-stroke {
-	background-image: url('../IMG/logos/ColorPalette_logo.png');
+	background-image: url("../IMG/logos/ColorPalette_logo.png");
 }

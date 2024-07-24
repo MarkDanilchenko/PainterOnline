@@ -1,11 +1,5 @@
 .toolBar {
-	@include bar($color-lightGray, 50px);
-	top: 5px;
-	z-index: 10;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
+	@include bar($color-white, 50px, center, space-between);
 	button {
 		width: 30px;
 		height: 30px;
@@ -16,6 +10,7 @@
 		background-repeat: no-repeat;
 		background-size: contain;
 		background-clip: content-box;
+		background-color: $color-white;
 		padding: 2px;
 		&:hover {
 			cursor: pointer;
@@ -26,7 +21,7 @@
 	}
 	.active {
 		transform: scale(1.1);
-		box-shadow: 3px 3px 2px 0 $color-darkGray !important;
+		box-shadow: 3px 3px 1px 0 $color-darkGray !important;
 	}
 }
 

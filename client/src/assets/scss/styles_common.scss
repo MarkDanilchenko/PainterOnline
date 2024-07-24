@@ -3,14 +3,15 @@
 }
 
 .container {
-	height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	& > .row:first-of-type > h1 {
+	& > .row:first-of-type h1 {
 		padding-top: 15px;
-		text-align: center;
-		@include font-1(300);
+		text-align: start;
+		@include font-1(26, 400);
+		text-shadow: 0 3px 5px $color-darkGray;
 	}
 }
 

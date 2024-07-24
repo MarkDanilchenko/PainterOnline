@@ -1,20 +1,23 @@
-// settings-bar & tool-bar
-@mixin bar($background-color, $height) {
+@mixin bar($background-color, $min-height, $align, $justify) {
 	background-color: $background-color;
-	min-height: $height;
-	position: relative;
-	box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5);
+	min-height: $min-height;
+	box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.5);
 	border: 1px solid $color-black;
-    border-radius: 5px;
+	border-radius: 5px;
 	padding-left: 15px;
-    padding-right: 15px;
+	padding-right: 15px;
+	display: flex;
+	align-items: $align;
+	justify-content: $justify;
+	margin-bottom: 5px;
 }
 
 // FONTS
 // <weight>: Use a value from 100 to 400
-@mixin font-1($weight) {
-	font-family: 'Playwrite CU', cursive;
+@mixin font-1($size, $weight) {
+	font-family: "Playwrite CU", cursive;
 	font-optical-sizing: auto;
 	font-weight: $weight;
 	font-style: normal;
+	font-size: $size + px;
 }

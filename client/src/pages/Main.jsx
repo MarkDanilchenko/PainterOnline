@@ -116,17 +116,23 @@ const Main = (props) => {
 	return (
 		<div className="container">
 			<div className="row">
-				<h1>Painter Online</h1>
-				<ToolBar />
-				<SettingsBar />
+				<div className="col-10 offset-1">
+					<h1>Painter Online</h1>
+					<ToolBar />
+					<SettingsBar />
+				</div>
 			</div>
 			<div className="row">
-				<ModalGreeting showModalGreeting={showModalGreeting} setShowModalGreeting={setShowModalGreeting} />
-				{/* Custom hook to resize the canvas based on the window size. */}
-				<Canvas width={useResizeCanvas().canvasWidth} height={useResizeCanvas().canvasHeight} />
+				<div className="col-12">
+					<ModalGreeting showModalGreeting={showModalGreeting} setShowModalGreeting={setShowModalGreeting} />
+					{/* Custom hook to resize the canvas based on the window size. */}
+					<Canvas width={useResizeCanvas().canvasWidth} height={useResizeCanvas().canvasHeight} />
+				</div>
 			</div>
 			<div className="row">
-				<Footer />
+				<div className="col-12">
+					<Footer />
+				</div>
 			</div>
 		</div>
 	);

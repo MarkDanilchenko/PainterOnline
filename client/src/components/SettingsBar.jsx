@@ -1,12 +1,12 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { setLineWidth, setFillColor, setStrokeColor } from '../store/toolsReducer.js';
-import { ModalNotice } from './ModalNotice.jsx';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { setLineWidth, setFillColor, setStrokeColor } from "../store/toolsReducer.js";
+import { ModalNotice } from "./ModalNotice.jsx";
 
 const SettingsBar = (props) => {
 	const dispatch = useDispatch();
 	const [showModal, setShowModal] = React.useState(false);
-	const [modalContent, setModalContent] = React.useState('');
+	const [modalContent, setModalContent] = React.useState("");
 
 	return (
 		<>
@@ -29,7 +29,7 @@ const SettingsBar = (props) => {
 								dispatch(setLineWidth(event.target.value));
 							} catch (error) {
 								event.target.value = 1;
-								setModalContent('Tool is not set. Please, choose a tool first and then set a line width.');
+								setModalContent("Tool is not set. Please, choose a tool first and then set a line width.");
 								setShowModal(true);
 							}
 						}}
@@ -42,7 +42,7 @@ const SettingsBar = (props) => {
 					<button
 						className="settingsBar__button_colorPicker-fill"
 						onClick={() => {
-							document.getElementById('settingsBar__input_colorPicker-fill').click();
+							document.getElementById("settingsBar__input_colorPicker-fill").click();
 						}}
 					></button>
 					<input
@@ -50,14 +50,14 @@ const SettingsBar = (props) => {
 						className="form-control form-control-color"
 						name="settingsBar__input_colorPicker-fill"
 						id="settingsBar__input_colorPicker-fill"
-						defaultValue={'#000000'}
-						style={{ display: 'none' }}
+						defaultValue={"#000000"}
+						style={{ display: "none" }}
 						onChange={(event) => {
 							try {
 								dispatch(setFillColor(event.target.value));
 							} catch (error) {
-								event.target.value = '#000000';
-								setModalContent('Tool is not set. Please, choose a tool first and then set a color.');
+								event.target.value = "#000000";
+								setModalContent("Tool is not set. Please, choose a tool first and then set a color.");
 								setShowModal(true);
 							}
 						}}
@@ -70,7 +70,7 @@ const SettingsBar = (props) => {
 					<button
 						className="settingsBar__button_colorPicker-stroke"
 						onClick={() => {
-							document.getElementById('settingsBar__input_colorPicker-stroke').click();
+							document.getElementById("settingsBar__input_colorPicker-stroke").click();
 						}}
 					></button>
 					<input
@@ -78,14 +78,14 @@ const SettingsBar = (props) => {
 						className="form-control form-control-color"
 						name="settingsBar__input_colorPicker-stroke"
 						id="settingsBar__input_colorPicker-stroke"
-						defaultValue={'#000000'}
-						style={{ display: 'none' }}
+						defaultValue={"#000000"}
+						style={{ display: "none" }}
 						onChange={(event) => {
 							try {
 								dispatch(setStrokeColor(event.target.value));
 							} catch (error) {
-								event.target.value = '#000000';
-								setModalContent('Tool is not set. Please, choose a tool first and then set a color.');
+								event.target.value = "#000000";
+								setModalContent("Tool is not set. Please, choose a tool first and then set a color.");
 								setShowModal(true);
 							}
 						}}

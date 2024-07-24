@@ -5,7 +5,9 @@
 }
 
 #canvas {
-    border: 2px solid $color-black;
-    border-radius: 5px;
-    background-color: $color-white;
+	border: 2px solid $color-black;
+	border-radius: 5px;
+	background-color: $color-white;
+	box-shadow: 5px 5px 15px $color-darkGray;
+	cursor: crosshair;
 }
