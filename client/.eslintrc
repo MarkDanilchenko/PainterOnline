@@ -1,0 +1,38 @@
+{
+  "extends": ["react-app", "react-app/jest"],
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "plugins": ["prettier"],
+  "ignorePatterns": ["node_modules/**", "dist/**", "build/**", "coverage/**"],
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+    }
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "prefer-const": "warn",
+    "no-unused-vars": "error",
+    "no-undef": "error",
+    "no-use-before-define": "error",
+    "no-useless-constructor": "error",
+    "no-console": "warn",
+    "no-alert": "error",
+    "semi": "error",
+    "prettier/prettier": "error",
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"]
+      }
+    ]
+  }
+}

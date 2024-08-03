@@ -1,47 +1,52 @@
 import globals from 'globals';
 import pluginJs from '@eslint/js';
-import pluginReact from 'eslint-plugin-react';
 import pluginPrettier from 'eslint-plugin-prettier';
-import pluginReactHooks from 'eslint-plugin-react-hooks';
+import pluginImport from 'eslint-plugin-import';
 
 export default [
   pluginJs.configs.recommended,
-  pluginReact.configs.flat.recommended,
   {
     plugins: {
       prettier: pluginPrettier,
-      'react-hooks': pluginReactHooks,
-    },
+      import: pluginImport
+    }
   },
   {
-    ignores: ['**/node_modules/**', '**/dist/**', '**/build/**', '**/public/**', '**/coverage/**'],
+    ignores: ['**/node_modules/**', '**/dist/**', '**/build/**', '**/public/**', '**/coverage/**']
   },
   {
-    files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
+    files: ['**/*.js', '**/*.ts']
   },
   {
     languageOptions: {
-      ecmaVersion: 2021,
       globals: {
         ...globals.browser,
         ...globals.node,
-        ...globals.es2021,
-      },
-    },
+        ...globals.es2021
+      }
+    }
   },
   {
     linterOptions: {
-      noInlineConfig: true,
+      noInlineConfig: true
     },
     rules: {
-      'prefer-const': 'error',
+      'prefer-const': 'warn',
       'no-unused-vars': 'error',
       'no-undef': 'error',
-      'no-console': 'error',
+      'no-use-before-define': 'error',
+      'no-useless-constructor': 'error',
+      'no-console': 'warn',
       'no-alert': 'error',
       semi: 'error',
       'prettier/prettier': 'error',
-      'react-hooks/rules-of-hooks': 'error',
-    },
-  },
+      'import/order': [
+        'error',
+        {
+          'newlines-between': 'always',
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index']
+        }
+      ]
+    }
+  }
 ];

@@ -9,6 +9,7 @@
 # <https://docs.docker.com/engine/reference/builder/#dockerignore-file>
 
 <!-- forbidden -->
+
 **/.DS_Store
 **/__pycache__
 **/.venv
@@ -43,6 +44,7 @@ package-lock.json
 .nuxt
 
 <!-- allowed -->
+
 !**/.env
 !LICENSE
 !README.md
