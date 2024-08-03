@@ -38,7 +38,6 @@ class Brush extends Tools {
 		this.canvas.onmousedown = this.mouseDownHandler.bind(this);
 		this.canvas.onmousemove = this.mouseMoveHandler.bind(this);
 	}
-
 	mouseUpHandler(event) {
 		this.mouseDown = false;
 		this.socket.send(
@@ -154,8 +153,8 @@ class Rectangle extends Tools {
 	mouseMoveHandler(event) {
 		if (this.mouseDown) {
 			// Get end point from mouse position XY and calculate width and height of the rectangle.
-			let endX = event.pageX - this.canvas.offsetLeft;
-			let endY = event.pageY - this.canvas.offsetTop;
+			const endX = event.pageX - this.canvas.offsetLeft;
+			const endY = event.pageY - this.canvas.offsetTop;
 			this.width = endX - this.startX;
 			this.height = endY - this.startY;
 			this.draw(this.startX, this.startY, this.width, this.height);
@@ -256,8 +255,8 @@ class Circle extends Tools {
 	mouseMoveHandler(event) {
 		if (this.mouseDown) {
 			// Get end point from mouse position XY and calculate radius(diagonal) of the circle.
-			let endX = event.pageX - this.canvas.offsetLeft;
-			let endY = event.pageY - this.canvas.offsetTop;
+			const endX = event.pageX - this.canvas.offsetLeft;
+			const endY = event.pageY - this.canvas.offsetTop;
 			this.radius = Math.sqrt(Math.pow(endX - this.startX, 2) + Math.pow(endY - this.startY, 2));
 			this.draw(this.startX, this.startY, this.radius);
 		}

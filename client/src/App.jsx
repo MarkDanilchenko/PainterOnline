@@ -5,7 +5,7 @@ import { Router } from './router/Router.jsx';
 const App = (props) => {
 	return (
 		<BrowserRouter>
-			<Router />
+		<Router />
 		</BrowserRouter>
 	);
 };

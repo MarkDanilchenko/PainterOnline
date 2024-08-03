@@ -13,7 +13,7 @@
 }
 
 // FONTS
-// <weight>: Use a value from 100 to 400
+// <weight>: Use a value from 100 to 400 for this font
 @mixin font-1($size, $weight) {
 	font-family: "Playwrite CU", cursive;
 	font-optical-sizing: auto;
