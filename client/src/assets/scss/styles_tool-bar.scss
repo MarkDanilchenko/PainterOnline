@@ -1,55 +1,55 @@
 .toolBar {
-	@include bar($color-white, 50px, center, space-between);
-	button {
-		width: 30px;
-		height: 30px;
-		border: 1px solid $color-black;
-		border-radius: 5px;
-		margin: 5px;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: contain;
-		background-clip: content-box;
-		background-color: $color-white;
-		padding: 2px;
-		&:hover {
-			cursor: pointer;
-			transform: scale(1.1);
-			box-shadow: 0 0 10px 0 $color-darkGray;
-		}
-		transition: all 0.2s ease-in-out;
-	}
-	.active {
-		transform: scale(1.1);
-		box-shadow: 3px 3px 1px 0 $color-darkGray !important;
-	}
+  @include bar($color-white, 50px, center, space-between);
+  button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid $color-black;
+    border-radius: 5px;
+    margin: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-clip: content-box;
+    background-color: $color-white;
+    padding: 2px;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+      box-shadow: 0 0 10px 0 $color-darkGray;
+    }
+    transition: all 0.2s ease-in-out;
+  }
+  .active {
+    transform: scale(1.1);
+    box-shadow: 3px 3px 1px 0 $color-darkGray !important;
+  }
 }
 
 .toolBar__button_brush {
-	background-image: url('../IMG/logos/Brush_logo.png');
+  background-image: url('../IMG/logos/Brush_logo.png');
 }
 .toolBar__button_rectangle {
-	background-image: url('../IMG/logos/RectangleFilled_logo.png');
+  background-image: url('../IMG/logos/RectangleFilled_logo.png');
 }
 .toolBar__button_circle {
-	background-image: url('../IMG/logos/CircleFilled_logo.png');
-	background-size: 90% !important;
+  background-image: url('../IMG/logos/CircleFilled_logo.png');
+  background-size: 90% !important;
 }
 .toolBar__button_eraser {
-	background-image: url('../IMG/logos/Eraser_logo.png');
+  background-image: url('../IMG/logos/Eraser_logo.png');
 }
 .toolBar__button_line {
-	background-image: url('../IMG/logos/Line_logo.png');
+  background-image: url('../IMG/logos/Line_logo.png');
 }
 .toolBar__button_undo {
-	background-image: url('../IMG/logos/Undo_logo.png');
+  background-image: url('../IMG/logos/Undo_logo.png');
 }
 .toolBar__button_redo {
-	background-image: url('../IMG/logos/Redo_logo.png');
+  background-image: url('../IMG/logos/Redo_logo.png');
 }
 .toolBar__button_save {
-	background-image: url('../IMG/logos/Save_logo.png');
+  background-image: url('../IMG/logos/Save_logo.png');
 }
 .toolBar__button_clear {
-	background-image: url('../IMG/logos/Clear_logo.png');
+  background-image: url('../IMG/logos/Clear_logo.png');
 }

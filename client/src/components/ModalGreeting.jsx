@@ -1,8 +1,8 @@
 import React from 'react';
-import { Modal, Button, Form, Image } from 'react-bootstrap';
+import { Button, Form, Image, Modal } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 
-import { setUsername } from '../store/userReducer.js';
+import { setUsername } from '../store/connectionReducer.js';
 import Logo from '../assets/IMG/logos/PO_logo.png';
 
 const ModalGreeting = (props) => {
@@ -13,9 +13,9 @@ const ModalGreeting = (props) => {
     if (inputUsername) {
       dispatch(setUsername(inputUsername));
       props.setShowModalGreeting(false);
-    } else {
-      return;
     }
+
+    return;
   };
 
   return (
@@ -56,15 +56,7 @@ const ModalGreeting = (props) => {
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant='primary'
-          onClick={() => connectHandler()}
-          onKeyUp={(e) => {
-            if (e.key === 'Enter') {
-              connectHandler();
-            }
-          }}
-          disabled={!inputUsername}>
+        <Button variant='primary' onClick={() => connectHandler()} disabled={!inputUsername}>
           Submit
         </Button>
       </Modal.Footer>
@@ -72,4 +64,4 @@ const ModalGreeting = (props) => {
   );
 };
 
-export { ModalGreeting };
+export default ModalGreeting;

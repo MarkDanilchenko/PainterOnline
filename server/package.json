@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js",
-    "eslint": "eslint . --fix"
+    "dev": "NODE_ENV=development nodemon index.js",
+    "start": "NODE_ENV=public node index.js",
+    "format": "eslint . --fix && prettier --write ."
   },
   "keywords": [],
   "author": "",
@@ -24,7 +24,6 @@
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-import": "^2.29.1",
     "globals": "^15.8.0",
     "prettier": "^3.3.3"
   },

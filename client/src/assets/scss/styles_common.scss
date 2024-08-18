@@ -1,20 +1,20 @@
 #root {
-	background-color: $color-lightGray;
+  background-color: $color-lightGray;
 }
 
 .container {
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	& > .row:first-of-type h1 {
-		padding-top: 15px;
-		text-align: start;
-		@include font-1(26, 400);
-		text-shadow: 0 3px 5px $color-darkGray;
-	}
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  & > .row:first-of-type h1 {
+    padding-top: 15px;
+    text-align: start;
+    @include font-1(26, 400);
+    text-shadow: 0 3px 5px $color-darkGray;
+  }
 }
 
 footer {
-	width: 100%;
+  width: 100%;
 }

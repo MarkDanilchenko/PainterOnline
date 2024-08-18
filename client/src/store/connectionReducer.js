@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const userReducer = createSlice({
-  name: 'userReducer',
+const connectionReducer = createSlice({
+  name: 'connectionReducer',
   initialState: {
     username: null,
     sessionId: null,
@@ -19,8 +19,7 @@ const userReducer = createSlice({
     }
   }
 });
+const { setUsername, setSessionId, setSocket } = connectionReducer.actions;
+const reducer = connectionReducer.reducer;
 
-const { setUsername, setSessionId, setSocket } = userReducer.actions;
-const reducer = userReducer.reducer;
-
-export { reducer as userReducer, setUsername, setSessionId, setSocket };
+export { setUsername, setSessionId, setSocket, reducer as connectionReducer };

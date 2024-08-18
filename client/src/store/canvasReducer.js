@@ -4,42 +4,62 @@ const canvasReducer = createSlice({
   name: 'canvasReducer',
   initialState: {
     canvas: null,
-    undoList: [],
-    redoList: []
+    undoStateList: [],
+    redoStateList: []
   },
   reducers: {
+    setCanvasDefaultSettings: (state) => {
+      const ctx = state.canvas.getContext('2d');
+      ctx.lineCap = 'round';
+    },
     setCanvas: (state, action) => {
       state.canvas = action.payload;
     },
-    pushToUndoList: (state, action) => {
-      state.undoList.push(action.payload);
+    pushToUndoStateList: (state, action) => {
+      state.undoStateList.push(action.payload);
     },
-    syncUndoList: (state, action) => {
-      state.undoList.splice(0, state.undoList.length, ...action.payload);
+    syncUndoStateList: (state, action) => {
+      state.undoStateList = [...action.payload];
     },
-    undo: (state, action) => {
+    undoAction: (state, action) => {
       const ctx = state.canvas.getContext('2d');
-      state.redoList.push(state.canvas.toDataURL());
+      state.redoStateList.push(state.canvas.toDataURL());
+      ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+      ctx.drawImage(action.payload, 0, 0, action.payload.width, action.payload.height);
+      state.undoStateList.pop();
+    },
+    redoAction: (state, action) => {
+      const ctx = state.canvas.getContext('2d');
+      state.undoStateList.push(state.canvas.toDataURL());
       ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
       ctx.drawImage(action.payload, 0, 0, state.canvas.width, state.canvas.height);
-      state.undoList.pop();
+      state.redoStateList.pop();
     },
-    redo: (state, action) => {
+    clearCanvas: (state) => {
       const ctx = state.canvas.getContext('2d');
-      state.undoList.push(state.canvas.toDataURL());
-      ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
-      ctx.drawImage(action.payload, 0, 0, state.canvas.width, state.canvas.height);
-      state.redoList.pop();
-    },
-    clearCanvas: (state, action) => {
-      const ctx = state.canvas.getContext('2d');
-      // state.undoList.push(state.canvas.toDataURL());
       ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
     }
   }
 });
 
-const { setCanvas, clearCanvas, pushToUndoList, undo, redo, syncUndoList } = canvasReducer.actions;
+const {
+  setCanvas,
+  setCanvasDefaultSettings,
+  clearCanvas,
+  pushToUndoStateList,
+  syncUndoStateList,
+  undoAction,
+  redoAction
+} = canvasReducer.actions;
 const reducer = canvasReducer.reducer;
 
-export { setCanvas, clearCanvas, pushToUndoList, undo, redo, syncUndoList, reducer as canvasReducer };
+export {
+  setCanvas,
+  setCanvasDefaultSettings,
+  clearCanvas,
+  pushToUndoStateList,
+  syncUndoStateList,
+  undoAction,
+  redoAction,
+  reducer as canvasReducer
+};

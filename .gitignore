@@ -6,10 +6,8 @@
 /draft
 draft.*
 staticfiles/
-mediafiles/
 *.pdf
 *.sql
-!dump.sql
 db_data/
 .DS_Store
 package-lock.*
@@ -234,7 +232,8 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+.env.*
+!.env.public
 .venv
 env/
 venv/

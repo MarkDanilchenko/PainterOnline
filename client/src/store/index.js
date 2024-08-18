@@ -2,13 +2,14 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { canvasReducer } from './canvasReducer.js';
 import { toolsReducer } from './toolsReducer.js';
-import { userReducer } from './userReducer.js';
+import { connectionReducer } from './connectionReducer.js';
 
 const rootReducer = combineReducers({
   canvasReducer: canvasReducer,
   toolsReducer: toolsReducer,
-  userReducer: userReducer
+  connectionReducer: connectionReducer
 });
+
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => {
@@ -18,4 +19,4 @@ const store = configureStore({
   }
 });
 
-export { store };
+export default store;

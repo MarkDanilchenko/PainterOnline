@@ -1,15 +1,15 @@
-import { Brush, Circle, Eraser, Rectangle, Line } from './tools_handler.js';
+import { Brush, Circle, Eraser, Line, Rectangle } from './tools_handler.js';
 
-const drawHandler = (msg, canvas) => {
-  const figureObject = msg.figureObject;
+const drawHandler = (response, canvas) => {
+  const figureObject = response.figureObject;
   const ctx = canvas.getContext('2d');
-  ctx.lineCap = 'round';
+
   switch (figureObject.type) {
     case 'brush':
-      Brush.__draw(ctx, figureObject.x, figureObject.y, figureObject.strokeColor, figureObject.lineWidth);
+      Brush.draw(ctx, figureObject.x, figureObject.y, figureObject.strokeColor, figureObject.lineWidth);
       break;
     case 'rectangle':
-      Rectangle.__draw(
+      Rectangle.draw(
         ctx,
         figureObject.startX,
         figureObject.startY,
@@ -19,9 +19,10 @@ const drawHandler = (msg, canvas) => {
         figureObject.strokeColor,
         figureObject.lineWidth
       );
+      ctx.beginPath();
       break;
     case 'circle':
-      Circle.__draw(
+      Circle.draw(
         ctx,
         figureObject.startX,
         figureObject.startY,
@@ -30,12 +31,13 @@ const drawHandler = (msg, canvas) => {
         figureObject.strokeColor,
         figureObject.lineWidth
       );
+      ctx.beginPath();
       break;
     case 'eraser':
-      Eraser.__draw(ctx, figureObject.x, figureObject.y, figureObject.lineWidth);
+      Eraser.draw(ctx, figureObject.x, figureObject.y, figureObject.lineWidth);
       break;
     case 'line':
-      Line.__draw(
+      Line.draw(
         ctx,
         figureObject.startX,
         figureObject.startY,
@@ -44,13 +46,10 @@ const drawHandler = (msg, canvas) => {
         figureObject.lineWidth,
         figureObject.strokeColor
       );
+      ctx.beginPath();
       break;
     case 'brush_finished':
-    case 'rectangle_finished':
-    case 'circle_finished':
     case 'eraser_finished':
-    case 'line_finished':
-      // This is neede to tell the server that the user has finished drawing and not to connect to separate drawing lines between other elements.
       ctx.beginPath();
       break;
     default:
@@ -58,4 +57,4 @@ const drawHandler = (msg, canvas) => {
   }
 };
 
-export { drawHandler };
+export default drawHandler;

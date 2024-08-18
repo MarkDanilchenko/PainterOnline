@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
+    "env-cmd": "^10.1.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
@@ -19,11 +20,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "env-cmd -f ../.env.development react-scripts start",
+    "demo": "env-cmd -f ../.env.public react-scripts start",
+    "build": "env-cmd -f ../.env.public react-scripts build",
+    "test": "env-cmd -f ../.env.development react-scripts test",
     "eject": "react-scripts eject",
-    "eslint": "eslint . --fix"
+    "format": "eslint . --fix && prettier --write ."
   },
   "browserslist": {
     "production": [

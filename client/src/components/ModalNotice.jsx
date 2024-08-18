@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 const ModalNotice = (props) => {
   return (
@@ -42,4 +42,4 @@ const ModalNotice = (props) => {
   );
 };
 
-export { ModalNotice };
+export default ModalNotice;

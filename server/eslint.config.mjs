@@ -1,14 +1,12 @@
 import globals from 'globals';
 import pluginJs from '@eslint/js';
 import pluginPrettier from 'eslint-plugin-prettier';
-import pluginImport from 'eslint-plugin-import';
 
 export default [
   pluginJs.configs.recommended,
   {
     plugins: {
-      prettier: pluginPrettier,
-      import: pluginImport
+      prettier: pluginPrettier
     }
   },
   {
@@ -27,9 +25,6 @@ export default [
     }
   },
   {
-    linterOptions: {
-      noInlineConfig: true
-    },
     rules: {
       'prefer-const': 'warn',
       'no-unused-vars': 'error',
@@ -37,14 +32,13 @@ export default [
       'no-use-before-define': 'error',
       'no-useless-constructor': 'error',
       'no-console': 'warn',
-      'no-alert': 'error',
       semi: 'error',
-      'prettier/prettier': 'error',
-      'import/order': [
+      'padding-line-between-statements': [
         'error',
         {
-          'newlines-between': 'always',
-          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index']
+          blankLine: 'always',
+          prev: '*',
+          next: 'return'
         }
       ]
     }

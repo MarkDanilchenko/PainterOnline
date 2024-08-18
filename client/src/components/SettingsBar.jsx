@@ -1,14 +1,16 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { setLineWidth, setFillColor, setStrokeColor } from '../store/toolsReducer.js';
+import { setFillColor, setLineWidth, setStrokeColor } from '../store/toolsReducer.js';
+import ModalNotice from './ModalNotice.jsx';
 
-import { ModalNotice } from './ModalNotice.jsx';
-
-const SettingsBar = (props) => {
+const SettingsBar = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = React.useState(false);
   const [modalContent, setModalContent] = React.useState('');
+  const activeTool = useSelector((state) => {
+    return state.toolsReducer.tool;
+  });
 
   return (
     <>
@@ -27,12 +29,23 @@ const SettingsBar = (props) => {
             max='50'
             defaultValue='1'
             onChange={(event) => {
-              try {
-                dispatch(setLineWidth(event.target.value));
-              } catch (error) {
-                event.target.value = 1;
+              if (!activeTool) {
                 setModalContent('Tool is not set. Please, choose a tool first and then set a line width.');
                 setShowModal(true);
+                event.target.value = 1;
+
+                return;
+              }
+              if (event.target.value < 1) {
+                event.target.value = 1;
+                setModalContent('Line width must be greater than 0.');
+                setShowModal(true);
+              } else if (event.target.value > 50) {
+                event.target.value = 50;
+                setModalContent('Line width must be less than 50.');
+                setShowModal(true);
+              } else {
+                dispatch(setLineWidth(event.target.value));
               }
             }}
           />
@@ -54,13 +67,14 @@ const SettingsBar = (props) => {
             defaultValue={'#000000'}
             style={{ display: 'none' }}
             onChange={(event) => {
-              try {
-                dispatch(setFillColor(event.target.value));
-              } catch (error) {
-                event.target.value = '#000000';
+              if (!activeTool) {
                 setModalContent('Tool is not set. Please, choose a tool first and then set a color.');
                 setShowModal(true);
+                event.target.value = '#000000';
+
+                return;
               }
+              dispatch(setFillColor(event.target.value));
             }}
           />
         </div>
@@ -81,13 +95,14 @@ const SettingsBar = (props) => {
             defaultValue={'#000000'}
             style={{ display: 'none' }}
             onChange={(event) => {
-              try {
-                dispatch(setStrokeColor(event.target.value));
-              } catch (error) {
-                event.target.value = '#000000';
+              if (!activeTool) {
                 setModalContent('Tool is not set. Please, choose a tool first and then set a color.');
                 setShowModal(true);
+                event.target.value = '#000000';
+
+                return;
               }
+              dispatch(setStrokeColor(event.target.value));
             }}
           />
         </div>
@@ -96,4 +111,4 @@ const SettingsBar = (props) => {
   );
 };
 
-export { SettingsBar };
+export default SettingsBar;

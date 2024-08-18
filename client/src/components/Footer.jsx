@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Footer = (props) => {
+const Footer = () => {
   return (
     <footer>
       <hr className='my-1 offset-3' style={{ width: '50%' }} />
@@ -9,4 +9,4 @@ const Footer = (props) => {
   );
 };
 
-export { Footer };
+export default Footer;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import { Router } from './router/Router.jsx';
+import Router from './router/Router.jsx';
 
-const App = (props) => {
+const App = () => {
   return (
     <BrowserRouter>
       <Router />
@@ -11,4 +11,4 @@ const App = (props) => {
   );
 };
 
-export { App };
+export default App;

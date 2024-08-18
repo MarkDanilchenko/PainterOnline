@@ -26,12 +26,12 @@
     "no-console": "warn",
     "no-alert": "error",
     "semi": "error",
-    "prettier/prettier": "error",
-    "import/order": [
+    "padding-line-between-statements": [
       "error",
       {
-        "newlines-between": "always",
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"]
+        "blankLine": "always",
+        "prev": "*",
+        "next": "return"
       }
     ]
   }

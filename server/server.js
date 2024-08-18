@@ -1,69 +1,74 @@
-// --------------------------------------SERVER_CONFIG
 const express = require('express');
-const server = express();
 const cors = require('cors');
 const corsOptions = {
   origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
 };
+const server = express();
 server.use(cors(corsOptions));
-// aWss is needed for broadcast messages to all connected clients.
 const expressWs = require('express-ws')(server);
-
 const aWss = expressWs.getWss();
-const { router } = require('./router/router.js');
-const { undoListHandler } = require('./services/undoListHandler.js');
+const router = require('./router/router.js');
+const canvasStateListHandler = require('./services/canvasStateListHandler.js');
 
-// --------------------------------------COMMON_MIDDLEWARE
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
+server.use('/api/v1', router);
 
-// --------------------------------------WEBSOCKET
-const connectionHandler = (ws, msg) => {
-  console.log(`User: ${msg.username} was connected to the server. ID: ${msg.id}.`);
-  // Broadcast message to all connected clients with the same session ID (which is the :id param in the URL on client).
-  // Each websocket connection has its own id. It is assigned by the express-ws middleware.
-  // However, we need to set it manually for the broadcasting to work.
-  // We get the id from the parsed message and assign it to the ws object.
-  // After this, we can use ws.id in the forEach loop below to send messages only to clients with the same session id.
-  ws.id = msg.id;
-  broadcastHandler(ws, msg);
-};
-
-const broadcastHandler = (ws, msg) => {
+const broadcastHandler = (msg) => {
   aWss.clients.forEach((client) => {
-    if (client.id === msg.id) {
+    if (client.id === msg.sessionId) {
       client.send(JSON.stringify(msg));
     }
   });
 };
 
-server.ws('/', (ws, req) => {
+const connectionHandler = (ws, msg) => {
+  // eslint-disable-next-line no-console
+  console.log(`User: ${msg.username} was connected to the server. Session ID: ${msg.sessionId}.`);
+  ws.id = msg.sessionId;
+  broadcastHandler(msg);
+};
+
+server.ws('/', (ws) => {
   ws.on('message', (message) => {
     const msg = JSON.parse(message);
     switch (msg.type) {
       case 'connection':
-        connectionHandler(ws, { ...msg, undoList: undoListHandler.undoList[msg.id] ?? [] });
+        connectionHandler(ws, {
+          ...msg,
+          canvasCommonUndoStateList: canvasStateListHandler.commonUndoStateList[msg.sessionId] ?? []
+        });
         break;
       case 'draw':
-        broadcastHandler(ws, msg);
+        broadcastHandler(msg);
         break;
       case 'clear':
-        broadcastHandler(ws, msg);
+        broadcastHandler(msg);
         break;
-      case 'undoListSync':
-        if (msg.id in undoListHandler.undoList) {
-          undoListHandler.pushToUndoList(msg.id, msg.lastAction);
+      case 'commonUndoStateListSync':
+        if (msg.sessionId in canvasStateListHandler.commonUndoStateList) {
+          canvasStateListHandler.pushToCommonUndoStateList(msg.sessionId, msg.canvasLastState);
         } else {
-          undoListHandler.setUndoList(msg.id, msg.lastAction);
+          canvasStateListHandler.setCommonUndoStateList(msg.sessionId, msg.canvasLastState);
         }
-        broadcastHandler(ws, { ...msg, undoList: undoListHandler.undoList[msg.id] });
+        broadcastHandler({
+          ...msg,
+          canvasCommonUndoStateList: canvasStateListHandler.commonUndoStateList[msg.sessionId]
+        });
         break;
       case 'undo':
-        broadcastHandler(ws, msg);
+        if (msg.sessionId in canvasStateListHandler.commonUndoStateList) {
+          canvasStateListHandler.popFromCommonUndoStateList(msg.sessionId);
+        }
+        broadcastHandler(msg);
         break;
       case 'redo':
-        broadcastHandler(ws, msg);
+        canvasStateListHandler.pushToCommonUndoStateList(
+          msg.sessionId,
+          msg.canvasRedoStateList[msg.canvasRedoStateList.length - 1]
+        );
+        broadcastHandler(msg);
         break;
       default:
         break;
@@ -71,19 +76,9 @@ server.ws('/', (ws, req) => {
   });
 });
 
-// --------------------------------------ROUTES
-server.use('/api/v1', router);
-
-server.all('/', async (req, res) => {
-  res.status(302);
-  res.redirect('/api/v1');
-});
-
 server.all('*', async (req, res) => {
   res.status(404);
-  res.json({ message: 'Resource Not found. Please, check the URL and try again.' });
   res.end();
 });
 
-// --------------------------------------EXPORT
-module.exports = { server };
+module.exports = server;
