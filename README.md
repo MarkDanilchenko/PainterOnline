@@ -27,7 +27,7 @@
 1. Clone repository to your **local_folder**. After that, folder "PainterOnline" must be created in Your **local folder** automatically;
 
     ```
-    cd local_folder && git clone <https://github.com/MarkDanilchenko/PainterOnline.git>
+    cd local_folder && git clone <http/ssh-link>
     ```
 
 2. Install all server necessary dependencies:
