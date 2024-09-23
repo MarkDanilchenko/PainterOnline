@@ -1,82 +1,82 @@
-## App Description &#128196;
+## App Description &#128209;
 
-### <div style="text-align: start;">PainterOnline</div>
+This is a online painter app based on such technologies as React, Redux, NodeJS, Express.<br> Server is based both on websocket and http protocols.<br> Users can paint on the canvas at the same time with live canvas rerendering.
 
-<p>This is a online painter app based on such technologies as React, Redux, NodeJS, Express.<br> Server is based both on websocket and http protocols.<br> Users can paint on the canvas at the same time with live canvas rerendering.</p>
+## Launch instructions &#128190;
 
-## Launch instructions &#128196;
+&#9881;**Frontend**:
 
-  Technologies used:
-
-- **Frontend**:
-  - React;
-  - Redux-Toolkit;
-  - Bootstrap;
-  - React-bootstrap;
-  - HTML/SCSS;
-  - Canvas API;
+- React;
+- Redux-Toolkit;
+- Bootstrap5;
+- React-bootstrap;
+- HTML/SCSS;
+- Canvas API;
   
-- **Backend**:
-  - NodeJS (ExpressJS);
-  - Websockets/HTTP;
+&#9881;**Backend**:
 
-<div style="text-align: end;">
-<p><i>Necessary prerequisites:<br> Git, Node and npm should be installed locally on Your PC.</i></p>
+- NodeJS (ExpressJS);
+- Websockets/HTTP;
+
+<div style="display: flex; justify-content: end;">
+  <p>Git and Docker should be installed locally on Your PC.</p>
 </div>
 
-1. Clone repository to your **local_folder**. After that, folder "PainterOnline" must be created in Your **local folder** automatically;
+---
 
-    ```
-    cd local_folder && git clone <http/ssh-link>
+1. Clone repository to Your local path:
+
+    ```sh
+    cd <your_local_path> && git clone <http/ssh-link>
     ```
 
 2. Install all server necessary dependencies:
 
-    ```
+    ```sh
     cd PainterOnline/server && npm install
     ```
 
 3. Install all client necessary dependencies::
 
-    ```
+    ```sh
     cd PainterOnline/client && npm install
     ```
 
-4. **First** start **server**:
+4. **!!!First** start **server**:
 
-    ```
+    ```sh
     cd PainterOnline/server && npm run start
     ```
 
-5. **Second** start **client**:F
+5. **!!!Second** start **client**:
 
-    ```
+    ```sh
     cd PainterOnline/client && npm run demo
     ```
 
-6. Open app on the URL <http://127.0.0.1:5000> in your browser;
+6. After the installation is complete the web-app will start on `127.0.0.1:5000`;
+
+- Open web-app in browser using URL: <http://127.0.0.1:5000/>
 
 7. To stop the server/client:
 
-    ```
+    ```sh
     Ctrl + C
     ```
 
-<br>
+---
 
-<div style="font-size: small;">
-  <i>
-    p.s. You can change the default api server's host:port in .env.public.
-    Make sure that HOST_SERVER & REACT_APP_HOST_SERVER and PORT_SERVER & REACT_APP_PORT_SERVER have the same values.
-  </i>
-</div>
+### p.s
 
-### APP Screenshots
+- You can change the default API host:port in ./.env.public;
+- Make sure that `HOST_SERVER` & `REACT_APP_HOST_SERVER` and `PORT_SERVER` & `REACT_APP_PORT_SERVER` must have the **same values**.
 
-1. *PainterOnline in use*
+## Screenshots &#127745;
+
+1. Main page
 
 <div align="center">
-    <img src="./screenshots/ScrShot_1.png" width="75%" height="75%" alt='PainterOnline in use'>
+    <img src="./screenshots/ScrShot_1.png" width="75%" height="75%" alt='Main page'>
 </div>
 
 <br>
